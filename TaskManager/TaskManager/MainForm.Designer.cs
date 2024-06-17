@@ -33,7 +33,7 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabPageProcesses = new System.Windows.Forms.TabPage();
-            this.listViewProcesses = new System.Windows.Forms.ListView();
+            this.listViewProcesses = new ListViewSmooth();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.tabPageProcesses.SuspendLayout();
@@ -123,7 +123,8 @@
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TabPage tabPageProcesses;
         private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.ListView listViewProcesses;
+        private ListViewSmooth listViewProcesses;
+        //private System.Windows.Forms.ListView listViewProcesses;
         public System.Windows.Forms.Timer timer1;
     }
 }

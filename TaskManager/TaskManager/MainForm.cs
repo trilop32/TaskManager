@@ -18,7 +18,6 @@ namespace TaskMenager
             InitializeComponent();
             KDSHDJ();
             statusStrip1.Items.Add("");
-           listViewProcesses.
         }
         private void timer1_Tick(object sender, EventArgs e)
         {
@@ -42,6 +41,7 @@ namespace TaskMenager
                 listViewProcesses.Items.Add(item);
             }
             statusStrip1.Items[0].Text=$"Количесвто процессов:{listViewProcesses.Items.Count}";
+            
         }
     }
 }
