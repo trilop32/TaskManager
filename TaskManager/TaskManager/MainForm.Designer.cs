@@ -1,6 +1,6 @@
 ﻿namespace TaskMenager
 {
-    partial class Form1
+    partial class MainForm
     {
         /// <summary>
         /// Обязательная переменная конструктора.
@@ -28,12 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabPageProcesses = new System.Windows.Forms.TabPage();
             this.listViewProcesses = new System.Windows.Forms.ListView();
             this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.tabPageProcesses.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.SuspendLayout();
@@ -70,17 +72,21 @@
             // listViewProcesses
             // 
             this.listViewProcesses.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listViewProcesses.FullRowSelect = true;
+            this.listViewProcesses.GridLines = true;
             this.listViewProcesses.HideSelection = false;
             this.listViewProcesses.Location = new System.Drawing.Point(3, 3);
+            this.listViewProcesses.MultiSelect = false;
             this.listViewProcesses.Name = "listViewProcesses";
             this.listViewProcesses.Size = new System.Drawing.Size(786, 393);
             this.listViewProcesses.TabIndex = 0;
             this.listViewProcesses.UseCompatibleStateImageBehavior = false;
+            this.listViewProcesses.View = System.Windows.Forms.View.Details;
             // 
             // tabControl1
             // 
-            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tabPageProcesses);
             this.tabControl1.Controls.Add(this.tabPage2);
@@ -90,7 +96,12 @@
             this.tabControl1.Size = new System.Drawing.Size(800, 425);
             this.tabControl1.TabIndex = 0;
             // 
-            // Form1
+            // timer1
+            // 
+            this.timer1.Interval = 1000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -98,7 +109,7 @@
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.tabControl1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "Form1";
+            this.Name = "MainForm";
             this.Text = "TaskManager";
             this.tabPageProcesses.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
@@ -113,6 +124,7 @@
         private System.Windows.Forms.TabPage tabPageProcesses;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.ListView listViewProcesses;
+        public System.Windows.Forms.Timer timer1;
     }
 }
 

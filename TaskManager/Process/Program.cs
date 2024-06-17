@@ -1,4 +1,5 @@
 ﻿#define SINGLE_PROCESS
+//#define all_processes
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +31,6 @@ namespace Process
             System.Security.Principal.WindowsIdentity wi = new System.Security.Principal.WindowsIdentity(handle);
             CloseHandle(handle);
             PerformanceCounter cpuCounter = new PerformanceCounter("Process", "% Processor Time", process.ProcessName);
-
             while (true)
             {
                 PerformanceCounter MB = new PerformanceCounter("Process", "Working Set - Private", process.ProcessName);
@@ -41,12 +41,22 @@ namespace Process
                 Console.WriteLine($"Treads: {process.Threads}");
                 Console.WriteLine($"Priority: {process.PriorityClass}");
                 Console.WriteLine($"Занимаемая память: {mbsize} МБ");
-                Console.WriteLine($"Загрузка ЦП:{cpU/3}");
-                Thread.Sleep(1000);
+                Console.WriteLine($"Загрузка ЦП:{cpU/3} %");
+                Thread.Sleep(700);
                 Console.Clear();
             }
+#endif
+#if ALL_PROCESS
 
-
+            //System.Diagnostics.Process[] processes = System.Diagnostics.Process.GetProcesses();//все запущенные процессы
+            //for (int i = 0; i < processes.Length; i++)
+            //{
+            //    Console.WriteLine($"{processes[i].Id}\t{processes[i].MainModule.FileName}\t");
+            //    //Console.WriteLine($"Name: {processes[i].ProcessName}\t");
+            //    //Console.WriteLine($"PID: {processes[i].Id}\t");
+            //    //Console.WriteLine($"Path: {processes[i].MainModule.FileName}\t");
+            //    //Console.WriteLine();
+            //}
 #endif
         }
         //используем функции Windows которые в C# нет 

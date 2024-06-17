@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,23 +11,37 @@ using System.Windows.Forms;
 
 namespace TaskMenager
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
             KDSHDJ();
-            
+            statusStrip1.Items.Add("");
+           listViewProcesses.
+        }
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            LoadProcesses();
         }
         void KDSHDJ()
         {
+            listViewProcesses.Columns.Add("PID");
+            listViewProcesses.Columns.Add("Name");
+
+        }
+        void LoadProcesses()
+        {
+            listViewProcesses.Items.Clear();
             Process[] processes = Process.GetProcesses();
-            
-                for (int i = 0; i < processes.Length; i++)
-                {
-                    listViewProcesses.Items.Add($"{processes[i].Id} {processes[i].ProcessName}\n");
-                }
-            
+            for (int i = 0; i < processes.Length; i++)
+            {
+                ListViewItem item = new ListViewItem();
+                item.Text = processes[i].Id.ToString();
+                item.SubItems.Add(processes[i].ProcessName);
+                listViewProcesses.Items.Add(item);
+            }
+            statusStrip1.Items[0].Text=$"Количесвто процессов:{listViewProcesses.Items.Count}";
         }
     }
 }
