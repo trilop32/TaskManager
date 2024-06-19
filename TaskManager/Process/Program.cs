@@ -1,5 +1,6 @@
-﻿#define SINGLE_PROCESS
+﻿//#define SINGLE_PROCESS
 //#define all_processes
+#define PROCESS_DICTIONARY
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -58,6 +59,18 @@ namespace Process
             //    //Console.WriteLine();
             //}
 #endif
+#if PROCESS_DICTIONARY
+            System.Diagnostics.Process[] processes = System.Diagnostics.Process.GetProcesses();
+            //for (int=0;int<processes.Length;int++)
+            //{
+            //    Console.WriteLine($"{processes[i].Id}\t{processes[i].ProcessName}")
+            //}
+            Dictionary<int, System.Diagnostics.Process> dictionary = processes.ToDictionary(item => item.Id, iTem => item);
+            foreach(KeyValuePair<int,System.Diagnostics.Process> i in dictionary)
+            {
+                Console.WriteLine($"{i.Key}\t{i.Value.ProcessName}");
+            }
+#endif
         }
         //используем функции Windows которые в C# нет 
         [DllImport("advapi32.dll", SetLastError = true)]
@@ -65,7 +78,5 @@ namespace Process
         [DllImport("kernel32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool CloseHandle(IntPtr handle);
-
-
     }
 }
