@@ -107,10 +107,10 @@ namespace TaskMenager
         {
             listViewProcesses.Items.RemoveByKey(pId.ToString());
         }
-
         private void runToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            CommandLine cmd = new CommandLine();
+            cmd.ShowDialog();
         }
     }
 }
