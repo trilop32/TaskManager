@@ -1,6 +1,6 @@
-﻿//#define SINGLE_PROCESS
+﻿#define SINGLE_PROCESS
 //#define all_processes
-#define PROCESS_DICTIONARY
+//#define PROCESS_DICTIONARY
 using System;
 using System.Collections.Generic;
 using System.Linq;

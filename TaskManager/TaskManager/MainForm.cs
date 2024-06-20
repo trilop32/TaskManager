@@ -8,12 +8,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
 namespace TaskMenager
 {
     public partial class MainForm : Form
     {
         Dictionary<int, Process> d_processes;
+        readonly int ramFactor = 1024;
+        readonly string suuffix = "kB";
         public MainForm()
         {
             InitializeComponent();
@@ -26,12 +27,15 @@ namespace TaskMenager
             //LoadProcesses();
             AddNewProcesses();
             RemoveOldProcesse();
+            UpdateExistingProcesses();
             statusStrip1.Items[0].Text = $"Количесвто процессов:{listViewProcesses.Items.Count}";
         }
         void KDSHDJ()
         {
-            listViewProcesses.Columns.Add("PID");
-            listViewProcesses.Columns.Add("Name");
+            listViewProcesses.Columns.Add("PID");//item
+            listViewProcesses.Columns.Add("Name");//subitem 1
+            listViewProcesses.Columns.Add("Working set");//subitem 2
+            listViewProcesses.Columns.Add("Paek working set");//subitems 3
         }
         void LoadProcesses()
         {
@@ -47,10 +51,11 @@ namespace TaskMenager
             d_processes = Process.GetProcesses().ToDictionary(item => item.Id, item => item);
             foreach (KeyValuePair<int,Process> i in d_processes)
             {
-                ListViewItem item= new ListViewItem();
-                item.Text = i.Key.ToString();
-                item.SubItems.Add(i.Value.ProcessName);
-                listViewProcesses.Items.Add(item);
+                //ListViewItem item= new ListViewItem();
+                //item.Text = i.Key.ToString();
+                //item.SubItems.Add(i.Value.ProcessName);
+                //listViewProcesses.Items.Add(item);
+                AddProcessToListView(i.Value);
             }
             //statusStrip1.Items[0].Text = $"Количесвто процессов:{listViewProcesses.Items.Count}";
         }
@@ -79,16 +84,33 @@ namespace TaskMenager
                 }
             }
         }
+        void UpdateExistingProcesses()
+        {
+            for(int i=0;i<listViewProcesses.Items.Count;i++)
+            {
+                int id = Convert.ToInt32(listViewProcesses.Items[i].Text);
+               // Process process = d_processes[id];
+                listViewProcesses.Items[i].SubItems[2].Text = $"{d_processes[id].WorkingSet64/ramFactor} {suuffix}";
+                listViewProcesses.Items[i].SubItems[3].Text = $"{d_processes[id].PeakWorkingSet64 / ramFactor} {suuffix}";
+            }
+        }
         void AddProcessToListView(Process process)
         {
             ListViewItem item = new ListViewItem();
             item.Text=process.Id.ToString();
             item.SubItems.Add(process.ProcessName);
+            item.SubItems.Add($"{process.WorkingSet64/ramFactor} {suuffix}");
+            item.SubItems.Add($"{process.PeakWorkingSet64 / ramFactor} {suuffix}");
             listViewProcesses.Items.Add(item);
         }
         void RomoveProcessFromListView(int pId)
         {
             listViewProcesses.Items.RemoveByKey(pId.ToString());
+        }
+
+        private void runToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
