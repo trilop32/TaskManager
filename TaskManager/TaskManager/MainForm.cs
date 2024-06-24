@@ -18,9 +18,11 @@ namespace TaskMenager
         Dictionary<int, Process> d_processes;
         readonly int ramFactor = 1024;
         readonly string suuffix = "kB";
+        CommandLine cmd;
         public MainForm()
         {
             InitializeComponent();
+            cmd = new CommandLine();
             KDSHDJ();
             statusStrip1.Items.Add("");
             LoadProcesses();
@@ -178,10 +180,16 @@ namespace TaskMenager
         }
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            string filePath = "combobox_data.txt";
-            if (File.Exists(filePath))
+            //string filePath = "combobox_data.txt";
+            //if (File.Exists(filePath))
+            //{
+            //    File.WriteAllText(filePath, string.Empty);
+            //}
+            StreamWriter sw = new StreamWriter("combobox_data.txt");
+
+            for (int i = 0; i < cmd.ComboBoxFileName.Items.Count; i++)
             {
-                File.WriteAllText(filePath, string.Empty);
+                sw.WriteLine(cmd.ComboBoxFileName.Items[i]);
             }
         }
 

@@ -81,11 +81,13 @@
             // 
             // comboBoxFIleName
             // 
+            this.comboBoxFIleName.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.comboBoxFIleName.FormattingEnabled = true;
             this.comboBoxFIleName.Location = new System.Drawing.Point(63, 67);
             this.comboBoxFIleName.Name = "comboBoxFIleName";
             this.comboBoxFIleName.Size = new System.Drawing.Size(237, 21);
-            this.comboBoxFIleName.TabIndex = 4;
+            this.comboBoxFIleName.TabIndex = 0;
+            this.comboBoxFIleName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.comboBoxFIleName_KeyPress);
             // 
             // CommandLine
             // 
@@ -101,6 +103,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "CommandLine";
             this.Text = "Run";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CommandLine_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 

@@ -8,13 +8,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace TaskMenager
 {
     public partial class CommandLine : Form
     {
         private const string DataFilePath = "combobox_data.txt";
+        public ComboBox ComboBoxFileName
+        {
+            get
+            {
+                return ComboBoxFileName;
+            }            
+        }
         public CommandLine()
         {
             InitializeComponent();
@@ -22,18 +28,25 @@ namespace TaskMenager
         }
         private void buttonOK_Click(object sender, EventArgs e)
         {
-            string newText = comboBoxFIleName.Text;
-            if (!string.IsNullOrEmpty(newText))
+            try
             {
-                comboBoxFIleName.Items.Clear();
-                comboBoxFIleName.Items.Add(newText);
-                SaveComboBoxData();
+                string newText = comboBoxFIleName.Text;
+                if (!string.IsNullOrEmpty(newText))
+                {
+                    comboBoxFIleName.Items.Remove(newText);
+                    comboBoxFIleName.Text = (newText);
+                    comboBoxFIleName.Items.Insert(0, newText);
+                    //SaveComboBoxData();
+
+                }
+                System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo(comboBoxFIleName.Text);
+                System.Diagnostics.Process process = new System.Diagnostics.Process();
+                process.StartInfo = startInfo;
+                process.Start();
+                // comboBoxFIleName.Items.Insert(0,comboBoxFIleName.Text);
+                this.Close();
             }
-            System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo(comboBoxFIleName.Text);
-            System.Diagnostics.Process process = new System.Diagnostics.Process();
-            process.StartInfo = startInfo;
-            process.Start();
-            this.Close();
+            catch (Exception ex) { MessageBox.Show(this, ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
         private void SaveComboBoxData()
         {
@@ -41,7 +54,9 @@ namespace TaskMenager
             {
                 foreach (string item in comboBoxFIleName.Items)
                 {
+
                     writer.WriteLine(item);
+
                 }
             }
         }
@@ -74,6 +89,19 @@ namespace TaskMenager
                 string filePath = openFileDialog.FileName;
                 comboBoxFIleName.Text = filePath;
             }
+        }
+
+        private void comboBoxFIleName_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if(e.KeyChar ==(char)Keys.Enter)
+            {
+                buttonOK_Click(sender, e);
+            }
+        }
+
+        private void CommandLine_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            comboBoxFIleName.Focus();
         }
     }
 }
